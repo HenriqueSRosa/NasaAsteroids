@@ -111,46 +111,45 @@ namespace NASATeste
             NEO asteroids = ga.getAsteroids(startDate, endDate);
 
             string isHazardous = "";
-
-            foreach (var dates in asteroids.near_earth_objects.Values)
+            if(asteroids != null)
             {
-                foreach (var asteroid in dates)
+                foreach (var dates in asteroids.near_earth_objects.Values)
                 {
-                    if (asteroid.is_potentially_hazardous_asteroid)
+                    foreach (var asteroid in dates)
                     {
-                        isHazardous = "Sim";
-                    }
-                    else
-                    {
-                        isHazardous = "Não";
-                    }
-                    dataGridAsteroids.Rows.Add(asteroid.name, isHazardous, asteroid.estimated_diameter.meters.estimated_diameter_min, asteroid.estimated_diameter.meters.estimated_diameter_max,
-                    asteroid.estimated_diameter.miles.estimated_diameter_min, asteroid.estimated_diameter.miles.estimated_diameter_max, asteroid.estimated_diameter.kilometers.estimated_diameter_min,
-                    asteroid.estimated_diameter.kilometers.estimated_diameter_max, asteroid.close_approach_data[0].relative_velocity.kilometers_per_hour, 
-                    asteroid.close_approach_data[0].close_approach_date);
-                }
-
-            }
-
-            if (cboHazardous.Text.ToString() != "Todos")
-            {
-                foreach(DataGridViewRow row in dataGridAsteroids.Rows)
-                {
-                    if(row.Cells[0].Value != null)
-                    {
-                        if (row.Cells[1].Value.ToString() == cboHazardous.Text.ToString())
+                        if (asteroid.is_potentially_hazardous_asteroid)
                         {
-                            row.Visible = true;
+                            isHazardous = "Sim";
                         }
                         else
                         {
-                            row.Visible = false;
+                            isHazardous = "Não";
                         }
+                        dataGridAsteroids.Rows.Add(asteroid.name, isHazardous, asteroid.estimated_diameter.meters.estimated_diameter_min, asteroid.estimated_diameter.meters.estimated_diameter_max,
+                        asteroid.estimated_diameter.miles.estimated_diameter_min, asteroid.estimated_diameter.miles.estimated_diameter_max, asteroid.estimated_diameter.kilometers.estimated_diameter_min,
+                        asteroid.estimated_diameter.kilometers.estimated_diameter_max, asteroid.close_approach_data[0].relative_velocity.kilometers_per_hour,
+                        asteroid.close_approach_data[0].close_approach_date);
                     }
-                   
+
                 }
 
-                //(dataGridAsteroids.DataSource as DataTable).DefaultView.RowFilter = string.Format("isPotentiallyHazardous = '{0}'", cboHazardous.Text.ToString());
+                if (cboHazardous.Text.ToString() != "Todos")
+                {
+                    foreach (DataGridViewRow row in dataGridAsteroids.Rows)
+                    {
+                        if (row.Cells[0].Value != null)
+                        {
+                            if (row.Cells[1].Value.ToString() == cboHazardous.Text.ToString())
+                            {
+                                row.Visible = true;
+                            }
+                            else
+                            {
+                                row.Visible = false;
+                            }
+                        }
+                    }
+                }
             }
         }
 

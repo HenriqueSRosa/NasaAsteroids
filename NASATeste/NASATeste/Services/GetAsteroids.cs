@@ -26,9 +26,16 @@ namespace NASATeste.Services
                         };
 
 
-
-            return RequestGetAsync<NEO>
+            try
+            {
+                return RequestGetAsync<NEO>
                 ("https://api.nasa.gov/neo/rest/v1/feed", urlParams).Result;
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("Não foi possível acessar os dados da API. Favor tentar outra data!", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
         }
         public static async Task<T> RequestGetAsync<T>(string url, Dictionary<string, string> urlParams = null)
         {
